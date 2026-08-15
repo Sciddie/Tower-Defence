@@ -97,7 +97,8 @@ class GameView(context: Context) : SurfaceView(context), SurfaceHolder.Callback,
 
                 var canvas: Canvas? = null
                 try {
-                    canvas = holder.lockHardwareCanvas() ?: holder.lockCanvas()
+                    canvas = try { holder.lockHardwareCanvas() } catch (_: Exception) { null }
+                        ?: holder.lockCanvas()
                     if (canvas != null && s != null) s.draw(canvas)
                 } finally {
                     canvas?.let { try { holder.unlockCanvasAndPost(it) } catch (_: Exception) {} }
