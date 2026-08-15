@@ -15,10 +15,22 @@ android {
         versionName = "1.0.0"
     }
 
+    signingConfigs {
+        create("release") {
+            // Eigener Release-Key für direkte Distribution (GitHub Releases).
+            // Für eine Play-Store-Veröffentlichung eigenen, geheimen Key verwenden!
+            storeFile = rootProject.file("keystore/release.keystore")
+            storePassword = "mcd-release-2026"
+            keyAlias = "mcd_release"
+            keyPassword = "mcd-release-2026"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
